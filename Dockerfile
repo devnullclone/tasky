@@ -11,8 +11,8 @@ RUN echo "All who wander are not lost." > wizexercise.txt
 
 # Create .env file
 RUN echo "DB_USERNAME=admin" > .env && \
-    echo "DB_PASSWORD=password123" >> .env && \
-    echo "DB_HOST=your-ec2-public-ip" >> .env && \
+    echo "DB_PASSWORD=IeKKWj&8IQv9aMF2" >> .env && \
+    echo "DB_HOST=ip-10-0-1-119.us-west-2.compute.internal" >> .env && \
     echo "DB_NAME=test" >> .env
 
 FROM alpine:3.17.0 as release
@@ -24,5 +24,5 @@ COPY --from=build  /go/src/tasky/assets ./assets
 COPY --from=build  /go/src/tasky/wizexercise.txt .
 # Copy the .env file from the build stage
 COPY --from=build  /go/src/tasky/.env .
-EXPOSE 8080
+EXPOSE 8080 27017
 ENTRYPOINT ["/app/tasky"]
