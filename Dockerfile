@@ -6,14 +6,19 @@ COPY . .
 RUN go mod download
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /go/src/tasky/tasky
 
-# Create a text file
-RUN echo "All who wander are not lost." > wizexercise.txt
+# Set environment variables for MongoDB connection
+ENV MONGO_USERNAME=admin \
+    MONGO_PASSWORD=IeKKWj&8IQv9aMF2 \
+    MONGO_HOST=10.0.1.127 \
+    MONGO_PORT=27017 \
+    MONGO_DB=admin
 
-# Create .env file
-RUN echo "DB_USERNAME=admin" > .env && \
-    echo "DB_PASSWORD=IeKKWj&8IQv9aMF2" >> .env && \
-    echo "DB_HOST=ip-10-0-1-220.us-west-2.compute.internal" >> .env && \
-    echo "DB_NAME=test" >> .env
+# Create .env file with MongoDB connection string
+RUN echo "DB_URI=mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DB}?\
+retryWrites=true&\
+w=majority&\
+authSource=admin&\
+ssl=false" >> .env
 
 FROM alpine:3.17.0 as release
 
