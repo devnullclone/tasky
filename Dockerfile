@@ -20,6 +20,9 @@ w=majority&\
 authSource=admin&\
 ssl=false" >> .env
 
+# Create a new text file
+RUN echo "All who wander are not lost." > /go/src/tasky/wizexercise.txt
+
 FROM alpine:3.17.0 as release
 
 WORKDIR /app
