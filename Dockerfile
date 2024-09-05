@@ -6,20 +6,6 @@ COPY . .
 RUN go mod download
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /go/src/tasky/tasky
 
-# Set environment variables for MongoDB connection
-ENV MONGO_USERNAME=admin \
-    MONGO_PASSWORD=password \
-    MONGO_HOST=10.0.1.193 \
-    MONGO_PORT=27017 \
-    MONGO_DB=codeonedigest-springboot-mongodb-emo
-
-# Create .env file with MongoDB connection string
-RUN echo "DB_URI=mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DB}?\
-retryWrites=true&\
-w=majority&\
-authSource=admin&\
-ssl=false" >> .env
-
 # Create a new text file
 RUN echo "All who wander are not lost." > /go/src/tasky/wizexercise.txt
 
