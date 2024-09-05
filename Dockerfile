@@ -16,7 +16,5 @@ COPY --from=build  /go/src/tasky/tasky .
 COPY --from=build  /go/src/tasky/assets ./assets
 # Copy the text file from the build stage
 COPY --from=build  /go/src/tasky/wizexercise.txt .
-# Copy the .env file from the build stage
-COPY --from=build  /go/src/tasky/.env .
 EXPOSE 8080 27017
 ENTRYPOINT ["/app/tasky"]
