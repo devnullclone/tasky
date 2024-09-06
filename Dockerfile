@@ -16,5 +16,5 @@ COPY --from=build  /go/src/tasky/tasky .
 COPY --from=build  /go/src/tasky/assets ./assets
 # Copy the text file from the build stage
 COPY --from=build  /go/src/tasky/wizexercise.txt .
-EXPOSE 80 443
+EXPOSE 80 443 8080
 ENTRYPOINT ["/app/tasky"]
